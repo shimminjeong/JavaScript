@@ -1,11 +1,23 @@
-for(let i=1; i<=10; i++){
-    if(i%2){
-        // 나머지 값이 있음
-        // 홀수
-        continue; // 반복문의 코드블럭 처음으로 이동
-    }else{
-        //0
-        //나머지 값이 없음
+let stars=[];
+
+// 문자열로 초기화
+for(let i=0; i<=5;i++) stars[i]="";
+
+// 배열에 별표 만들기
+for (let i=0;i<=5;i++){
+    for(let j=0; j<=5; j++){
+        if(i<j){
+            stars[i][j]="x";
+        }else
     }
-    console.log(i);
+    // console.log(rowresult)
+
 }
+
+// for(line of stars){
+//     console.log(line);
+// }
+
+// *aaaaaa*
+// **aaa**
+// ***a***
