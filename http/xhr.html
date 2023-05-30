@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="result"></div>
+    <script>
+        let xhr = new XMLHttpRequest(); // 리퀘스트 객체 생성
+        xhr.open("GET", "student.json"); // 어떻게 할것인지 환경설정
+        xhr.send(); // 서버로 보내라
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+
+                let students = JSON.parse(xhr.responseText);
+                renderHTML(students);
+            }
+        }
+
+        function renderHTML(contents) {
+            let result = document.getElementById("result");
+            for (let content of contents) {
+                result.innerHTML += `
+                <h2>${content.name}</h2>
+                    <ul>
+                        <li>전공:${content.major}</li>
+                        <li>학년:${content.grade}</li>
+                    </ul>
+                    `;
+            }
+        }
+    </script>
+</body>
+
+</html>
