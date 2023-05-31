@@ -14,6 +14,8 @@
             width:50px;
             border-radius: 50%;
         }
+
+        
     </style>
 </head>
 <body>
@@ -41,12 +43,9 @@
 
         const url = "flags.json";   
         getHttpRequest(url, function(response) {
-            // 문자열 , 자바스크립트 객체로 변경
             var json = JSON.parse(response);
 
             for (var object in json){
-                // 이미지 객체 프로퍼티에
-                // 이미지 html 요소객체 생성해서 저장
                 let flag = document.createElement('img');
                 flag.src = json[object].image;
                 //flag.style="width:50px";
@@ -59,39 +58,41 @@
         });
 
         function createTable(obj) {
-            // 테이블
-            let table = document.createElement('table');
-            table.classList.add("table");
+    let table = document.createElement('table');
+    table.classList.add("table");
 
-            // tbody
-            let tbody = document.createElement('tbody');
-            // 객체의 배열, 배열 foreach
-            // 열
-            obj.forEach(el => {
-                let tr = document.createElement('tr');
-                // let ol = document.createElement('ol');
-                // console.log(el);
-                // console.log(Object.keys(el));
-                // 행
-                let i =1;
-                Object.keys(el).forEach(item=>{
-                    let _tr 
-                    // console.log(item);
-                    if(typeof(el[item]) == "object") {
-                        tr.appendChild(el[item]);
-                    } else {
-                        let td = document.createElement('td');
-                        td.innerHTML = el[item];
-                        tr.appendChild(td);
-                    }                  
-                })
-                tbody.appendChild(tr);
-            });
+    let tbody = document.createElement('tbody');
+    obj.forEach((el, index) => { // 인덱스 값(index) 추가
+        let tr = document.createElement('tr');
 
-            // 테이블에 tbody 추가하여
-            table.appendChild(tbody);
-            return table;
+        // 번호 추가
+        let tdNumber = document.createElement('td');
+        tdNumber.innerHTML = index + 1; // 1부터 시작하도록 설정
+        tr.appendChild(tdNumber);
+
+        Object.keys(el).forEach((item, i) => {
+            if (typeof (el[item]) == "object") {
+                tr.appendChild(el[item]);
+            } else {
+                let td = document.createElement('td');
+                td.innerHTML = el[item];
+                tr.appendChild(td);
+            }
+        });
+
+        // 배경색 추가
+        if ((index + 1) % 2 === 0) {
+            tr.style.backgroundColor = "lightgray";
+        } else {
+            tr.style.backgroundColor = "white";
         }
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    return table;
+}
     </script>
 </body>
 </html>

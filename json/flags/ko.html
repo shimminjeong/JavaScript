@@ -14,6 +14,10 @@
             width:50px;
             border-radius: 50%;
         }
+
+        .table tr:nth-child(odd) {
+            background-color: gray;
+        }
     </style>
 </head>
 <body>
@@ -41,27 +45,30 @@
 
         const url = "flags.json";   
         getHttpRequest(url, function(response) {
-            // 문자열 , 자바스크립트 객체로 변경
+            // 문자열, 자바스크립트 객체로 변경
             var json = JSON.parse(response);
 
-            for (var object in json){
+            for (var object in json) {
                 // 이미지 객체 프로퍼티에
                 // 이미지 html 요소객체 생성해서 저장
                 let flag = document.createElement('img');
                 flag.src = json[object].image;
-                //flag.style="width:50px";
                 json[object].image = flag;
             }
 
+            // 테이블 생성
             let table = createTable(json);
-            document.body.appendChild(table);
 
+            // body 다음에 추가
+            document.body.appendChild(table);
         });
 
         function createTable(obj) {
-            // 테이블
+            //테이블
             let table = document.createElement('table');
             table.classList.add("table");
+
+            let i = 1;
 
             // tbody
             let tbody = document.createElement('tbody');
@@ -69,13 +76,16 @@
             // 열
             obj.forEach(el => {
                 let tr = document.createElement('tr');
-                // let ol = document.createElement('ol');
-                // console.log(el);
-                // console.log(Object.keys(el));
+                //console.log(el);
+                //console.log(Object.keys(el));
                 // 행
-                let i =1;
+
+                let td = document.createElement('td');
+                td.innerHTML = i++;
+                tr.appendChild(td);
+
+
                 Object.keys(el).forEach(item=>{
-                    let _tr 
                     // console.log(item);
                     if(typeof(el[item]) == "object") {
                         tr.appendChild(el[item]);
@@ -85,11 +95,13 @@
                         tr.appendChild(td);
                     }                  
                 })
+
                 tbody.appendChild(tr);
             });
 
-            // 테이블에 tbody 추가하여
-            table.appendChild(tbody);
+            // 테이블에, tbody 추가하여
+            table.appendChild(tbody); 
+            // 테이블 반환
             return table;
         }
     </script>
